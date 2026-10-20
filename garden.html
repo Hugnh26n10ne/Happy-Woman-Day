@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>🌸 Món quà 20/10 - Bí mật</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Caveat:wght@400..700&family=Dancing+Script:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=4.0">
+</head>
+
+<body>
+  <!-- Palace Rose Garden Panoramic Background -->
+  <div class="palace-bg" id="palaceBg"></div>
+
+  <!-- Soft Sunlight Sunbeams & Bloom Glare -->
+  <div class="sunlight-overlay"></div>
+
+  <!-- Canvas container for rising stems, blooming roses, and petals -->
+  <div id="canvas-container">
+    <canvas id="gardenCanvas"></canvas>
+  </div>
+
+  <!-- Header Text: Dành bạn, cả một vườn hồng thương. -->
+  <header class="top-header">
+    <div class="recipient-wrap" id="headerTextWrap" title="Nhấp để thay đổi tên cô ấy">
+      <h1 class="garden-title" id="displayTitle">
+        <span class="prefix">Dành tặng</span><span class="recipient-name" id="nameSpan">bạn</span><span class="suffix">,
+          cả một món quà nho nhỏ.</span>
+      </h1>
+      <button class="edit-name-btn" id="editNameBtn" title="Chỉnh sửa tên">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Subtitle / Story Text at bottom -->
+  <div class="bottom-story">
+    <p class="story-text" id="storyText">Giữa muôn ngàn đóa hồng e ấp, cậu là đóa hoa xinh đẹp nhất...</p>
+    <p class="hint-text" id="hintText">✨ Chạm vào màn hình để thấy điều bất ngờ ✨</p>
+  </div>
+
+  <!-- Central Tap-to-Bloom Invitation (Visible initially while buds are unbloomed) -->
+  <div class="bloom-invitation" id="bloomInvitation">
+    <button class="bloom-magic-btn" id="magicBloomBtn" title="Nhấp để đánh thức vườn hoa nở rộ">
+      <div class="magic-btn-glow"></div>
+      <span class="magic-btn-icon">🌸</span>
+      <div class="magic-btn-text">Bí mật được bật mí</span>
+        <span class="magic-subtitle">Chạm để thấy điều bất ngờ 💌</span>
+      </div>
+      <span class="magic-btn-sparkle">✨</span>
+    </button>
+  </div>
+
+  <!-- Floating Flying Wish Card (Flies out after flowers bloom) -->
+  <div class="flying-wish-container" id="flyingWishContainer">
+    <div class="flying-wish-card" id="flyingWishCard">
+      <!-- Decorative Rose Stamp & Ribbon -->
+      <div class="card-ribbon">
+        <span class="ribbon-stamp">🌸 20·10 🌸</span>
+        <span class="ribbon-sub">HAPPY VIETNAMESE WOMEN'S DAY</span>
+      </div>
+
+      <button class="card-minimize-btn" id="minimizeCardBtn" title="Thu gọn để ngắm trọn vườn hoa">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+
+      <div class="card-content">
+        <h2 class="card-salutation">
+          Dành tặng <span class="card-recipient-name" id="cardRecipientName">cậu</span> 1 điều nho nhỏ,
+        </h2>
+
+        <div class="card-body-text" id="cardWishBody">
+          Nhân ngày Phụ nữ Việt Nam 20/10, chúc cậu luôn ngập tràn niềm vui, rạng rỡ và xinh đẹp như cả một vườn hồng
+          ngát hương dưới ánh nắng dịu dàng này.
+        </div>
+
+        <div class="card-sender-sign">
+          <span class="sign-from">Thư chúc từ,</span>
+          <span class="sign-name" id="cardSenderName">Mr Hưng</span>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button class="card-action-btn view-garden-btn" id="viewGardenBtn"
+          title="Thu gọn thư để ngắm trọn vẹn vườn hoa">
+          <span>🌸 Ngắm vườn hoa</span>
+        </button>
+        <button class="card-action-btn edit-wish-btn" id="editWishBtn" title="Chỉnh sửa nội dung thư hoặc tên cô ấy">
+          <span>✏️ Đổi lời chúc</span>
+        </button>
+        <button class="card-action-btn share-wish-btn" id="shareWishBtn"
+          title="Sao chép link kèm lời chúc gửi cho cô ấy">
+          <span>🎁 Sao chép link</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Re-open Floating Card Button (Visible when card is minimized) -->
+  <button class="reopen-card-btn" id="reopenCardBtn" title="Mở lại bức thư 20/10">
+    <span class="reopen-icon">💌</span>
+    <span class="reopen-label">Bức thư 20/10</span>
+  </button>
+
+  <!-- Floating Control Bar (Hidden by default) -->
+  <div class="floating-controls hidden" id="floatingControls">
+    <!-- Music Button -->
+    <button class="control-btn music-btn" id="musicToggleBtn" title="Bật / Tắt âm nhạc">
+      <div class="btn-icon-spin" id="musicDisk">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+        </svg>
+      </div>
+      <span class="btn-label" id="musicStatusText">Nhạc: Bật</span>
+    </button>
+
+    <!-- Change Music Track Button -->
+    <button class="control-btn track-btn" id="changeTrackBtn" title="Đổi bài nhạc khác (Piano / Guitar / Synth)">
+      <span class="btn-icon">🎵</span>
+      <span class="btn-label" id="trackNameLabel">Đổi nhạc</span>
+    </button>
+
+    <!-- Letter / Wishes Button -->
+    <button class="control-btn letter-btn" id="openLetterBtn" title="Mở bức thư 20/10">
+      <span class="btn-icon">💌</span>
+      <span class="btn-label">Bức thư 20/10</span>
+    </button>
+
+    <!-- Re-bloom Garden Button -->
+    <button class="control-btn bloom-btn" id="rebloomBtn" title="Để vườn hồng nở lại từ đầu">
+      <span class="btn-icon">🌸</span>
+      <span class="btn-label">Nở hoa</span>
+    </button>
+
+    <!-- Falling Petals Toggle -->
+    <button class="control-btn petal-btn" id="petalToggleBtn" title="Mưa cánh hoa hồng">
+      <span class="btn-icon">🍃</span>
+      <span class="btn-label">Mưa hoa</span>
+    </button>
+
+    <!-- Share Link Button -->
+    <button class="control-btn share-btn" id="shareBtn" title="Tạo link gửi cho cô ấy">
+      <span class="btn-icon">🎁</span>
+      <span class="btn-label">Gửi tặng</span>
+    </button>
+
+    <!-- Fullscreen Button -->
+    <button class="control-btn fullscreen-btn" id="fullscreenBtn" title="Toàn màn hình">
+      <span class="btn-icon">⛶</span>
+    </button>
+
+    <!-- Hide Controls Button (for pure recording / screenshot mode) -->
+    <button class="control-btn hide-btn" id="hideControlsBtn"
+      title="Ẩn thanh điều khiển (chế độ quay video / chụp ảnh)">
+      <span class="btn-icon">👁️</span>
+    </button>
+  </div>
+
+  <!-- Show Controls Trigger (Visible by default) -->
+  <button class="show-controls-trigger visible" id="showControlsTrigger" title="Mở thanh công cụ & Bức thư 20/10">
+    🌸
+  </button>
+
+  <!-- Modal: Personalized 20/10 Letter -->
+  <div class="letter-modal-overlay" id="letterModal">
+    <div class="letter-envelope">
+      <button class="modal-close-btn" id="closeLetterBtn">&times;</button>
+
+      <div class="letter-inner">
+        <div class="letter-header">
+          <span class="letter-stamp">20·10</span>
+          <div class="letter-title-group">
+            <span class="letter-sub">HAPPY VIETNAMESE WOMEN'S DAY</span>
+            <h2 class="letter-main-title">Gửi Người Phụ Nữ Tuyệt Vời</h2>
+          </div>
+        </div>
+
+        <div class="letter-divider">
+          <span>🌸 ❀ 🌸</span>
+        </div>
+
+        <div class="letter-body">
+          <p class="letter-salutation">
+            Gửi tặng <input type="text" id="inputRecipient" class="input-recipient" value="em"
+              placeholder="tên cô ấy...">,
+          </p>
+
+          <div class="letter-wishes-area">
+            <textarea id="customWishText" class="wish-textarea"
+              rows="6">Nhân ngày Phụ nữ Việt Nam 20/10, chúc cậu luôn ngập tràn niềm vui, rạng rỡ và xinh đẹp như cả một vườn hoa ngát hương dưới ánh nắng dịu dàng này.
+
+Chúc cậu mỗi ngày trôi qua đều được yêu thương, nâng niu và hạnh phúc theo cách ngọt ngào nhất. Cảm ơn cậu vì đã đến và làm cuộc sống này trở nên tươi đẹp hơn bao giờ hết! 💖</textarea>
+          </div>
+
+          <!-- Quick Wish Presets -->
+          <div class="wishes-preset-tags">
+            <span class="preset-label">Gợi ý lời chúc:</span>
+            <button class="preset-tag" data-type="crush">Dành cho Người Yêu / Crush 💕</button>
+            <button class="preset-tag" data-type="friend">Dành cho Bạn bè / Đồng nghiệp 🌷</button>
+            <button class="preset-tag" data-type="mom">Dành cho Mẹ yêu 💐</button>
+            <button class="preset-tag" data-type="cute">Dịu dàng & Đáng yêu ✨</button>
+          </div>
+
+          <div class="letter-sign">
+            <p>Từ một người luôn mong cậu mỉm cười,</p>
+            <input type="text" id="inputSender" class="input-sender" value="Chàng trai IT của em"
+              placeholder="Tên bạn...">
+          </div>
+        </div>
+
+        <div class="letter-actions">
+          <button class="btn-primary" id="saveWishBtn">
+            <span>Áp dụng vào vườn hồng ✨</span>
+          </button>
+          <button class="btn-secondary" id="copyShareLinkBtn">
+            <span>📋 Sao chép link gửi cô ấy</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast-notification" id="toast">Đã sao chép link thành công!</div>
+
+  <script src="audio.js?v=4.0"></script>
+  <script src="wishes.js?v=4.0"></script>
+  <script src="garden.js?v=4.0"></script>
+</body>
+
+</html>
